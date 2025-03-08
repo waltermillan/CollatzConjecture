@@ -1,0 +1,24 @@
+<div>
+  <!-- Rótulo con imagen en la parte superior -->
+  <header style="background-color: #000000; color: black; padding: 20px; text-align: center;">
+    <!-- Corregir el uso de comillas aquí -->
+    <img src="assets/images/title.png" alt="Logo" style="max-width: 100px; vertical-align: middle; margin-right: 20px;">
+    <span style="font-size: 24px; vertical-align: middle;color: #f4f4f4;">Conjetura de Collatz</span>
+  </header>
+
+  <!-- Contenedor principal con el menú lateral y contenido -->
+  <div style="display: flex; height: calc(100vh - 80px);">
+    <!-- Menú lateral -->
+    <div style="width: 200px; background-color: #f4f4f4; padding: 10px;">
+      <ul>
+        <li><a routerLink="/info" routerLinkActive="active">Info</a></li>
+        <li><a routerLink="/generate" routerLinkActive="active">Generar</a></li>
+      </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div style="flex-grow: 1; padding: 20px;">
+      <router-outlet></router-outlet>  <!-- Aquí se cargarán los componentes -->
+    </div>
+  </div>
+</div>

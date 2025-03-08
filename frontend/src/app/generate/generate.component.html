@@ -1,0 +1,24 @@
+<div>
+    <table>
+        <tr>
+            <td>
+                <input type="text" #value>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Generar" (click)="generate(value.value)">
+                <input type="button" value="Limpiar" (click)="delete()">
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div>
+    <h1 #title *ngIf="value.value">Lista de secuencias:</h1>
+<label *ngFor="let number of numbers">
+  <label #si *ngIf="number != 1"> {{ number }} --> </label>
+  <label #no *ngIf="number == 1"> {{ number }}</label>
+</label>
+</div>
