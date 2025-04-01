@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +19,9 @@ import { GenerateComponent } from './generate/generate.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    NgxChartsModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi(), withFetch())

@@ -1,49 +1,73 @@
 using API.Extensions;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Core.Entities;
+using Core.Interfases;
+using Infrastructure.Repositories;
+using Infrastructure.UnitOfWork;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
+using Serilog.Filters;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+builder.Logging.ClearProviders();
 
-// Add services to the container.
-builder.Services.ConfigureCors();
+// Configure Serilog
+builder.Logging.AddFilter("Microsoft", LogLevel.Warning);
+builder.Logging.AddFilter("System", LogLevel.Warning);
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("logs/CollaztsConjecture-.log", rollingInterval: RollingInterval.Day)
+    .Filter.ByExcluding(Matching.FromSource("Microsoft.EntityFrameworkCore"))
+    .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore"))
+    .CreateLogger();
 
+builder.Logging.AddSerilog();
+
+// Add controllers to handle requests
 builder.Services.AddControllers();
 
+builder.Services.AddAuthorization();
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureCors();
+builder.Services.AddAplicacionServices();
+
+builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    return new MongoClient(configuration.GetValue<string>("CollatzConjectureDBConnection"));
+});
+
+builder.Services.AddScoped<IUnitOfWork>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    return new UnitOfWork(mongoClient, configuration);
+});
+
+builder.Services.AddScoped<ICollatzConjectureRepository>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var databaseName = configuration.GetValue<string>("CollatzConjectureDBName");
+    var database = mongoClient.GetDatabase(databaseName);
+    var collection = database.GetCollection<CollatzConjecture>("CollatzConjectureCollection");
+    return new CollatzConjectureRepository(collection);
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-    try
-    { 
-
-    }
-    catch (Exception ex)
-    {
-        var logger = loggerFactory.CreateLogger<Program>();
-        logger.LogError(ex, "Ocurrió un error durante la migración");
-    }
-}
-
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
