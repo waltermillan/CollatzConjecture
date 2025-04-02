@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { InfoComponent } from './info/info.component';
 import { GenerateComponent } from './generate/generate.component';
+import { HistoricalInformationComponent } from './historical-information/historical-information.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InfoComponent,
-    GenerateComponent
+    GenerateComponent,
+    HistoricalInformationComponent
   ],
   imports: [
     BrowserModule,

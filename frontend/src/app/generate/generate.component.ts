@@ -28,6 +28,10 @@ export class GenerateComponent implements OnInit, AfterViewChecked {
   {}
 
   ngOnInit(): void {
+    // Solo accede a window cuando esté disponible en el navegador
+    if (typeof window !== 'undefined') {
+      this.view[0] = window.innerWidth; // Asigna el valor de window.innerWidth en el navegador
+    }
   }
 
   showPopup(visible: boolean): void {
@@ -74,7 +78,7 @@ export class GenerateComponent implements OnInit, AfterViewChecked {
         // Update dato graphic
         this.chartData = [
           {
-            "name": "Secuencia de Collatz",
+            "name": "Collatz's secuence",
             "series": this.numbers.map((value, index) => ({ name: index.toString(), value: value }))
           }
         ];
@@ -98,10 +102,10 @@ export class GenerateComponent implements OnInit, AfterViewChecked {
   add(numSteps:number) {
     this.collatzConjecture = {
       _id: '',
-      Sequence: this.numbers,
-      StartingNumber: this.value,
-      NumSteps: numSteps,
-      Timestamp: new Date(),
+      sequence: this.numbers,
+      startingNumber: parseInt( this.value, 10),
+      numSteps: numSteps,
+      timestamp: new Date().toISOString()
     };
 
     this.collatzService.add(this.collatzConjecture).subscribe({
@@ -115,10 +119,10 @@ export class GenerateComponent implements OnInit, AfterViewChecked {
   }
 
   clearChart() {
-    this.chartData = [];  // Clean data graphic
-    this.numbers = [];    // Clean secuence data
-    this.value = '';      // Clean data enter
-    this.collatzConjecture.NumSteps = 0;  // Restart NumSteps
+    this.chartData = [];                  // Clean data graphic
+    this.numbers = [];                    // Clean secuence data
+    this.value = '';                      // Clean data enter
+    this.collatzConjecture.numSteps = 0;  // Restart NumSteps
   }
 
 }

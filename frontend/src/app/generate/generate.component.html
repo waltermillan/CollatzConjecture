@@ -4,12 +4,12 @@
         <input type="button" value="Generate" (click)="generate(value)" class="btn btn-primary" style="margin-right: 10px;">
         <input type="button" value="Clear" (click)="clearChart()" class="btn btn-secondary" style="margin-right: 10px;">
         <input type="button" value="Show Secuence" (click)="showPopup(true)" class="btn btn-secondary" style="margin-right: 10px;">
-        <span *ngIf="collatzConjecture.NumSteps" style="margin-left: 10px;">Steps: {{ collatzConjecture.NumSteps }}</span>
+        <span *ngIf="collatzConjecture.numSteps" style="margin-left: 10px;">Steps: {{ collatzConjecture.numSteps }}</span>
     </div>
 </div>
 
-<!-- Gráfico -->
-<div style="width: 1100px; height: 400px; overflow: hidden; position: relative;">
+<!-- Graphic -->
+<div style="width: 1400px; height: 400px; overflow: hidden; position: relative;">
     <ngx-charts-line-chart
       [view]="view"
       [scheme]="colorScheme"
@@ -42,8 +42,7 @@
         <h6>Collatz Sequence:</h6>
         <div *ngIf="value" style="font-size: small; white-space: nowrap; text-overflow: ellipsis; overflow-x: auto; max-width: 100%; display: flex;">
             <span *ngFor="let number of numbers">
-                <span *ngIf="number != 1"> {{ number }}</span>,&nbsp;
-                <span *ngIf="number == 1"> {{ number }}</span>
+                , {{ number }}
             </span>
         </div>
         <input type="button" value="Close" (click)="showPopup(false)" class="btn btn-secondary" style="margin-top: 10px;">

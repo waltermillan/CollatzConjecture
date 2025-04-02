@@ -13,11 +13,16 @@ export class CollatzService {
   constructor(private http: HttpClient) { }
 
   generate(number:number): Observable<number[]> {
-    const url = `http://localhost:5184/service?value=${number}`;
+    const url = `${this.api}/service?value=${number}`;
     return this.http.get<number[]>(url);
   }
 
   add(collatzConjecture:CollatzConjecture): Observable<CollatzConjecture[]> {
     return this.http.post<CollatzConjecture[]>(this.api, collatzConjecture);
   }
+
+  getAll(): Observable<CollatzConjecture[]>{
+    const url = this.api;
+    return this.http.get<CollatzConjecture[]>(url);
+}
 }

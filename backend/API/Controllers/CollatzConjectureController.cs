@@ -15,10 +15,10 @@ public class CollatzConjectureController : BaseApiController
         _collatzConjecturetRepository = collatzConjecturetRepository;
     }
 
-    [HttpGet("/service")]
+    [HttpGet("service")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<List<int>> Get(int value)
+    public Task <ActionResult<List<int>>> Get(int value)
     {
         List<int> list = new List<int>();
         list.Add(value);
@@ -34,11 +34,11 @@ public class CollatzConjectureController : BaseApiController
                 list.Add(value);
             }
 
-            return list;
+            return Task.FromResult<ActionResult<List<int>>>(list);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
+            return Task.FromResult<ActionResult<List<int>>>(StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message }));
         }
     }
 
@@ -56,6 +56,7 @@ public class CollatzConjectureController : BaseApiController
         {
             id = collatzConjecture.Id.ToString(),  // ObjectId to string Convertion
             collatzConjecture.NumSteps,
+            collatzConjecture.StartingNumber,
             collatzConjecture.Sequence,
             collatzConjecture.Timestamp
         }).ToList();
@@ -76,6 +77,7 @@ public class CollatzConjectureController : BaseApiController
         var response = new
         {
             id = collatzConjecture.Id.ToString(),
+            collatzConjecture.StartingNumber,
             collatzConjecture.Sequence,
             collatzConjecture.NumSteps,
             collatzConjecture.Timestamp

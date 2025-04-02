@@ -1,0 +1,28 @@
+<div style="max-height: 600px; overflow-y: auto">
+    <table
+      id="tblHistoricalData"
+      class="table table-bordered"
+      style="width: 100%; border-collapse: collapse">
+      <tr>
+
+        <th>Number</th>
+        <th>Sequence</th>
+        <th>Steps</th>
+        <th>Date</th>
+      </tr>
+      <tbody *ngIf="conjetures && conjetures.length > 0; else msgNoData">
+        <tr *ngFor="let c of conjetures">
+
+          <td style="text-align: left">{{ c.startingNumber }}</td>
+
+          <td class="sequence-column" style="text-align: left">{{ c.sequence.join(', ') }}</td>
+          <td style="text-align: left">{{ c.numSteps }}</td>
+          <td style="text-align: left">{{ c.timestamp | date: 'dd-MM-yy HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+<ng-template #msgNoData>
+  <div style="text-align: center">No data available...</div>
+</ng-template>
