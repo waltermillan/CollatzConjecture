@@ -4,7 +4,7 @@
 
 ## Objective:
 
-Practice .NET (C#) / Design Patterns / Onion Architecture. This project does not use databases.
+Practice .NET (C#) / Design Patterns / Onion Architecture.
 
 ## Features
 
