@@ -2,12 +2,12 @@
 
 public class Functions
 {
-    public static int FunctionThreeXplusOne(int number)
+    public static long FunctionThreeXplusOne(long number)
     {
         return ((number * 3) + 1);
     }
 
-    public static int FunctionDivideByTwo(int number)
+    public static long FunctionDivideByTwo(long number)
     {
         return (number / 2);
     }

@@ -18,9 +18,9 @@ public class CollatzConjectureController : BaseApiController
     [HttpGet("service")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public Task <ActionResult<List<int>>> Get(int value)
+    public Task <ActionResult<List<long>>> Get(long value)
     {
-        List<int> list = new List<int>();
+        List<long> list = new List<long>();
         list.Add(value);
         try
         {
@@ -34,11 +34,11 @@ public class CollatzConjectureController : BaseApiController
                 list.Add(value);
             }
 
-            return Task.FromResult<ActionResult<List<int>>>(list);
+            return Task.FromResult<ActionResult<List<long>>>(list);
         }
         catch (Exception ex)
         {
-            return Task.FromResult<ActionResult<List<int>>>(StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message }));
+            return Task.FromResult<ActionResult<List<long>>>(StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message }));
         }
     }
 

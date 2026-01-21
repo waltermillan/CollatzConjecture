@@ -3,13 +3,13 @@
     <div style="display: flex; align-items: center;">
         <input type="button" value="Generate" (click)="generate(value)" class="btn btn-primary" style="margin-right: 10px;">
         <input type="button" value="Clear" (click)="clearChart()" class="btn btn-secondary" style="margin-right: 10px;">
-        <input type="button" value="Show Secuence" (click)="showPopup(true)" class="btn btn-secondary" style="margin-right: 10px;">
+        <input [disabled]="value === ''" type="button" value="Show Secuence" (click)="showPopup(true)" class="btn btn-secondary" style="margin-right: 10px;">
         <span *ngIf="collatzConjecture.numSteps" style="margin-left: 10px;">Steps: {{ collatzConjecture.numSteps }}</span>
     </div>
 </div>
 
 <!-- Graphic -->
-<div style="width: 1400px; height: 400px; overflow: hidden; position: relative;">
+<div style="width: 1400px; height: 400px; overflow: hidden; position: relative; text-align: left;">
     <ngx-charts-line-chart
       [view]="view"
       [scheme]="colorScheme"
@@ -29,7 +29,7 @@
 <div *ngIf="!isValid" class="overlay">
     <div class="popup">
         <h1>Value Out of range</h1>
-        <label>Must be an integer greater than 0 and less than 2.100.000.000</label>
+        <label>Must be an integer greater than 0 and less than 3.074.457.345.618.258.602</label>
         <br>
         <button (click)="closePopup()">Close</button>   
     </div>

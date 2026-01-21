@@ -12,7 +12,7 @@ export class CollatzService {
 
   constructor(private http: HttpClient) { }
 
-  generate(number:number): Observable<number[]> {
+  generate(number:string): Observable<number[]> {
     const url = `${this.api}/service?value=${number}`;
     return this.http.get<number[]>(url);
   }

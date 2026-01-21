@@ -60,16 +60,17 @@ export class GenerateComponent implements OnInit, AfterViewChecked {
   }
 
   generate(value: string) {
-    let nValue: number = parseInt(value, 10);
+    let nValue = BigInt(value);
+    const MAX = 3074457345618258602n;
 
-    if (nValue < 0 || nValue > 2100000000) {
+    if (nValue < 0 || nValue > MAX) {
       this.setIsValidOperation(false);
       this.delete();
       this.setFocus();
       return;
     }
 
-    this.collatzService.generate(nValue).subscribe({
+    this.collatzService.generate(value).subscribe({
       next: (data: any) => {
 
         this.numbers = data;
