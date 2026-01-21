@@ -7,6 +7,8 @@
 
 ## 📅 Changelog
 
+- **21/01/2026**:
+  - **Full Stack**: The application was adapted to handle large numbers safely and accurately, respecting the limitations of each platform and ensuring consistent results between frontend and backend..
 - **02/04/2025**:
   - **Full Stack**: Added history tracking functionality. Fixed minor bugs.
 - **01/04/2025**:
